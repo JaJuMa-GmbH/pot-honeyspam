@@ -1,0 +1,101 @@
+<?php
+/**
+ * @author    JaJuMa GmbH <info@jajuma.de>
+ * @copyright Copyright (c) 2023 JaJuMa GmbH <https://www.jajuma.de>. All rights reserved.
+ * @license   http://opensource.org/licenses/mit-license.php MIT License
+ */
+use Jajuma\PotHoneySpam\Block\PowerToys\HoneySpam;
+use Magento\Framework\Escaper;
+/** @var HoneySpam $block */
+/** @var Escaper $escaper */
+$magewire = $block->getMagewire();
+
+if ($block->isParentEnable()) {
+    $hours = $magewire->getHours();
+    $countSpam = $magewire->getCountSpam();
+}
+
+?>
+<div id="powertoys-honeyspam">
+    <span class="powertoys-widget-title"><?= 'Honey Spam' ?></span>
+    <?php if (!$block->isParentEnable()): ?>
+        <a class="jajuma-honeyspam-content no-parent-module" target="blank" href="https://www.jajuma.de/en/jajuma-develop/extensions/honey-spam-anti-spam-extension-for-magento-2">
+            <img alt="Honey Spam Anti-Spam" src="<?= $block->getViewFileUrl('Jajuma_PotHoneySpam::images/parent-module-image.png') ?>"/>
+            <?= 'Please install and enable' ?><br>
+            <?= 'Honey Spam Anti-Spam' ?>
+        </a>
+    <?php else: ?>
+        <div class="jajuma-honeyspam-content"><?= 'Detected <b>'.$countSpam.' spam(s)</b> in last <b>'.$hours.'</b> hours' ?></div>
+        <svg class="shield-icon w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" d="M11.484 2.17a.75.75 0 011.032 0 11.209 11.209 0 007.877 3.08.75.75 0 01.722.515 12.74 12.74 0 01.635 3.985c0 5.942-4.064 10.933-9.563 12.348a.749.749 0 01-.374 0C6.314 20.683 2.25 15.692 2.25 9.75c0-1.39.223-2.73.635-3.985a.75.75 0 01.722-.516l.143.001c2.996 0 5.718-1.17 7.734-3.08zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zM12 15a.75.75 0 00-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 00.75-.75v-.008a.75.75 0 00-.75-.75H12z" clip-rule="evenodd" />
+        </svg>
+    <?php endif; ?>
+    <div id="honeycomb"></div>
+    <style>
+        .widget-item.widget-item-dashboard_honeyspam {
+            background: #ffe9a3 !important;
+            color: #333;
+            overflow: hidden;
+        }
+
+        #powertoys-honeyspam {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #powertoys-honeyspam .jajuma-honeyspam-content {
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #powertoys-honeyspam .jajuma-honeyspam-content b {
+            font-size: 28px;
+            line-height: 32px;
+        }
+
+        #powertoys-honeyspam #honeycomb {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: center url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='rgb(40,40,40)' viewBox='0 0 100 169.5'%3E%3Cpolygon points='50,34.75 93.5,59.75 93.5,109.75 50,134.75 6.5,109.75 6.5,59.75'%3E%3C/polygon%3E%3Cpolygon points='0,-50 43.5,-25 43.5,25 0,50 -43.5,25 -43.5,-25'%3E%3C/polygon%3E%3Cpolygon points='100,-50 143.5,-25 143.5,25 100,50 56.5,25 56.5,-25'%3E%3C/polygon%3E%3Cpolygon points='0,119.5 43.5,144.5 43.5,194.5 0,219.5 -43.5,194.5 -43.5,144.5'%3E%3C/polygon%3E%3Cpolygon points='100,119.5 143.5,144.5 143.5,194.5 100,219.5 56.5,194.5 56.5,144.5'%3E%3C/polygon%3E%3C/svg%3E") !important;
+            background-size: 80px !important;
+            top: 0;
+            left: 0;
+            opacity: .04;
+        }
+
+        #powertoys-honeyspam .shield-icon {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            width: 40px;
+            height: 40px;
+        }
+
+        /* No parent extension */
+
+        #powertoys-honeyspam .no-parent-module img {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            transition: .3s ease transform;
+        }
+
+        #powertoys-honeyspam .no-parent-module:hover img {
+            transform: translateY(-3px);
+        }
+
+        #powertoys-honeyspam .jajuma-honeyspam-content.no-parent-module {
+            z-index: 1;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            text-decoration: none;
+        }
+
+    </style>
+</div>
